@@ -4,9 +4,8 @@ const pokeButton = document.getElementById('pokeButton');
 let pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20';
 
 /**
-*getpokes - pobieramy dane z api
+* getpokes - pobieramy dane z api
 */
-
 async function getPokes() {
   const pokemonData = await fetch(pokeUrl).then(res => res.json());
   return pokemonData;
@@ -16,8 +15,8 @@ async function getPokes() {
 * otrzymuje dane, pokemon wpada do kontenera 
 * start funkcji czyli click w buttona wylaczamy mozliwosc klikniecia i doadjemy animacje ladowania - trwa do zaladowania pokow
 */
-
 async function loadPoke() {
+  pokeContainer.style.overflowY = 'hidden';
   pokeButton.disabled = true;
   pokeButton.classList.add('poke-button');
 
@@ -29,7 +28,8 @@ async function loadPoke() {
     const pokeDiv = pokeCreateContainer(name, img, types);
     pokeContainer.appendChild(pokeDiv);
   }
-
+  
+  pokeContainer.style.overflowY = 'scroll';
   pokeButton.classList.remove('poke-button');
   pokeButton.disabled = false;
 };
@@ -37,7 +37,6 @@ async function loadPoke() {
 /**
 * tworzymy szablon dla pokemonow
 */
-
 function pokeCreateContainer(name, img, types) {
   const pokeDiv = document.createElement('div');
   pokeDiv.className = 'pokemon-data';

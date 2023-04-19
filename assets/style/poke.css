@@ -76,21 +76,24 @@ span {
     cursor: pointer;
     appearance: none;
     background-color: inherit;
-    transition: transform .7s ease-in-out;
 }
 
 #pokeButton img {
-    width: 5vw;
-    height: 5vw;
+    width: 3vw;
+    height: 3vw;
 }
 
 .poke-button {
-    animation: spin 1s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
 }
 
 .pokemon-data:hover.type-normal {
