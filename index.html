@@ -7,11 +7,22 @@
         <title>Pokedex</title>
         <link rel="icon" href="assets/img/favicon.ico">
         <link rel="stylesheet" href="assets/style/poke.css">
+        <script src="https://kit.fontawesome.com/ddb8cd0de4.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="whole-container">
             <span>PokeDex</span>
-            <div id="main-container"></div>
+            <div class="search-wrapper">
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Look for a pokemon!" id="search">
+                </div>
+            </div>
+            <div id="main-container">
+                <div id="pokemon-not-found-container" class="hidden">
+                    <img src="assets/img/pokemon-not-found.png" alt="Pokemon not found" id="noPoke">
+                </div>
+            </div>
             <a class="button-text">Click the pokeball to load more!</a>
             <div id="button-container">
                 <button id="pokeButton"><img src="assets/img/spinme.png" alt="button"></button>

@@ -1,6 +1,8 @@
 // @ts-nocheck
 const pokeContainer = document.getElementById('main-container');
 const pokeButton = document.getElementById('pokeButton');
+const pokeSearch = document.getElementById('search');
+const pokeNotFound = document.getElementById('pokemon-not-found-container');
 let pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20';
 
 /**
@@ -11,6 +13,21 @@ async function getPokes() {
   const pokemonData = await response.json();
   return pokemonData;
 };
+
+pokeSearch.addEventListener('input', (e) => {
+  const input = e.target.value.toLowerCase();
+  const pokeNames = document.querySelectorAll('.pokemon-name');
+  let found = false;
+  pokeNames.forEach(name => {
+    const nameValue = name.textContent.toLowerCase();
+    if (nameValue.indexOf(input) > -1) {
+      name.parentElement.style.display = '';
+      found = true;
+    } else {
+      name.parentElement.style.display = 'none';
+    }
+  });
+});
 
 /** 
 * otrzymuje dane, pokemon wpada do kontenera 
