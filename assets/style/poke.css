@@ -57,8 +57,8 @@ span {
   font-family: fonters;
   height: 7vw;
   margin: 0.5vw;
-  font-size: 0.8vw;
-  transition: background-position 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  font-size: 0.9vw;
+  transition: all 0.2s ease-in-out;
 }
 
 #button-container {
@@ -78,11 +78,19 @@ span {
   width: 2.5vw;
   height: 2.5vw;
 }
-#button-container #pokeButtonpoke-button {
-  -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
+
+.poke-button {
+  animation: spin 2s linear infinite;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .search-wrapper {
   display: flex;
   justify-content: center;
@@ -121,35 +129,26 @@ span {
 
 #pokemon-not-found-container {
   display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10em;
+  height: 20em;
+}
+#pokemon-not-found-container #noPoke {
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 }
-
-.hidden {
-  display: none;
+#pokemon-not-found-container span {
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  white-space: nowrap;
+  font-size: 3em;
 }
 
-@-webkit-keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .pokemon-data:hover.type-normal {
   background-color: rgba(168, 167, 122, 0.5019607843);
 }

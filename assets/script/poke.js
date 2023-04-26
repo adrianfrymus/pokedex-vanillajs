@@ -3,10 +3,13 @@ const pokeContainer = document.getElementById('main-container');
 const pokeButton = document.getElementById('pokeButton');
 const pokeSearch = document.getElementById('search');
 const pokeNotFound = document.getElementById('pokemon-not-found-container');
+const notFoundImage = document.getElementById('noPoke');
 let pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20';
 
+notFoundImage.style.display = 'none';
+
 /**
-* getpokes - pobieramy dane z api
+* getPokes() - connecting with api, parsing to json();
 */
 async function getPokes() {
   const response = await fetch(pokeUrl);
@@ -14,6 +17,10 @@ async function getPokes() {
   return pokemonData;
 };
 
+/**
+ * search bar function, uppercase included, 
+ * display an element if nothing found;
+ */
 pokeSearch.addEventListener('input', (e) => {
   const input = e.target.value.toLowerCase();
   const pokeNames = document.querySelectorAll('.pokemon-name');
@@ -27,11 +34,14 @@ pokeSearch.addEventListener('input', (e) => {
       name.parentElement.style.display = 'none';
     }
   });
+  pokeNotFound.style.display = found ? 'none' : 'block';
+  notFoundImage.style.display = found ? 'none' : 'block';
 });
 
 /** 
-* otrzymuje dane, pokemon wpada do kontenera 
-* start funkcji czyli click w buttona wylaczamy mozliwosc klikniecia i doadjemy animacje ladowania - trwa do zaladowania pokow
+* disable button and add animation on click which is cancelled when function is done, 
+* mapping pokemons through destructurization,
+* spread them to single containers using spread structure ...;
 */
 async function loadPoke() {
   pokeButton.disabled = true;
@@ -40,18 +50,21 @@ async function loadPoke() {
   const pokemonData = await getPokes();
   pokeUrl = pokemonData.next;
   
-  for (const poke of pokemonData.results) {
-    const { name, sprites: { front_default: img }, types } = await fetch(poke.url).then(res => res.json());
-    const pokeDiv = pokeCreateContainer(name, img, types);
-    pokeContainer.appendChild(pokeDiv);
-  }
+  const pokePromises = pokemonData.results.map(async(poke) => {
+    const { name, sprites: { front_default: img}, types } = await fetch(poke.url).then(res => res.json());
+    return pokeCreateContainer(name, img, types);
+  });
+
+  const pokeDivs = await Promise.all(pokePromises);
+  pokeContainer.append(...pokeDivs);
   
   pokeButton.classList.remove('poke-button');
   pokeButton.disabled = false;
 };
 
 /**
-* tworzymy szablon dla pokemonow
+* creating pokemon template with types destructurization,
+* appending to divs;
 */
 function pokeCreateContainer(name, img, types) {
   const pokeDiv = document.createElement('div');
